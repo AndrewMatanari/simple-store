@@ -9,9 +9,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+        $this->middleware('auth');
+     }
     public function index()
     {
-        //
+        $products = Product::all();
+        return view("products.index", compact("products"));
     }
 
     /**
@@ -19,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('products.create');
     }
 
     /**
@@ -27,6 +33,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name'=> 'required',
+        ]);
         // dd($request->all());
         Product::create($request->all());
         return redirect()->route('products.index');
@@ -37,7 +46,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('products.show', compact("product"));
     }
 
     /**
@@ -45,22 +54,31 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit', compact("product"));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Product $product)
+    // {
+    //     $this->validate($request, [
+    //         'name'=> 'required',
+    //     ]);
+    //     $product->update($request->all());
+    //     return redirect()->route('products.index');
+    // }
     {
-        //
+    $product->update(request()->except(['_token', '_method']));
+    return redirect()->route('products.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
+

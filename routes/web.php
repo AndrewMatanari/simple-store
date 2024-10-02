@@ -17,10 +17,12 @@ use App\Http\Controllers\ProductController;
 //     return view('welcome');
 // });
 
-Route::get('/', [App\Http\Controllers\ProductController]::class, 'product');
+Route::get('/', [ProductController::class, 'index']);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('products', ProductController::class);
+Route::group(['middleware' => 'auth'], function(){
+    Route::resource('products', ProductController::class);
+});
