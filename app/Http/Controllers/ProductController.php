@@ -9,11 +9,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-     public function __construct()
-     {
+    public function __construct()
+    {
         $this->middleware('auth');
-     }
+    }
+
     public function index()
     {
         $products = Product::all();
@@ -33,10 +33,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name'=> 'required',
+        $request->validate([
+            'name'=> 'required|string|max:100',
+            'description'=> 'nullable|string|max:255',
+            'retail_price'=> 'required|numeric|min:1|max:999999',
+            'wholesale_price'=> 'required|numeric|min:1|max:999999|lte:retail_price',
+            'min_wholesale_qty'=> 'required|integer|min:10',
+            'quantity'=> 'required|integer|min:0',
         ]);
-        // dd($request->all());
         Product::create($request->all());
         return redirect()->route('products.index');
     }
@@ -61,17 +65,19 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Product $product)
-    // {
-    //     $this->validate($request, [
-    //         'name'=> 'required',
-    //     ]);
-    //     $product->update($request->all());
-    //     return redirect()->route('products.index');
-    // }
     {
-    $product->update(request()->except(['_token', '_method']));
-    return redirect()->route('products.index');
+        $request->validate([
+            'name'=> 'required|string|max:100',
+            'description'=> 'nullable|string|max:255',
+            'retail_price'=> 'required|numeric|min:1|max:999999',
+            'wholesale_price'=> 'required|numeric|min:1|max:999999|lte:retail_price',
+            'min_wholesale_qty'=> 'required|integer|min:10',
+            'quantity'=> 'required|integer|min:0',
+        ]);
+        $product->update($request->except(['_token', '_method']));
+        return redirect()->route('products.index');
     }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -81,4 +87,3 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 }
-
