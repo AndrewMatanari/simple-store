@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container">
     <main>
@@ -6,20 +7,22 @@
         <a href="{{route('products.create')}}"><button class="btn btn-primary">Tambah Product</button></a>
         <table class="table table-striped mb-2 mt-2">
             <thead class="table-dark text-center">
-                <th>id</th>
-                <th>Product Name</th>
-                <th>Description</th>
-                <th>Retail Price</th>
-                <th>Wholesale Price</th>
-                <th>Min. Wholesale Qty</th>
-                <th>Quantity</th>
-                <th>Actions</th>
+                <th>ID</th>
+                <th>Nama Produk</th>
+                <th>Deskripsi</th>
+                <th>Harga Eceran</th>
+                <th>Harga Grosir</th>
+                <th>Min. Jumlah Grosir</th>
+                <th>Jumlah</th>
+                <th>Aksi</th>
             </thead>
-
             <tbody>
                 @foreach ($products as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
+                    <td>
+                        <img src="{{Storage::url($product->photo) }}" class="img-thumbnail w-50">
+                    </td>
                     <td>
                         <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
                     </td>
@@ -34,7 +37,7 @@
                             <form action="{{ route('products.destroy', $product) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
                         </div>
                     </td>
@@ -43,5 +46,6 @@
             </tbody>
         </table>
     </main>
+</div>
 @endsection
 

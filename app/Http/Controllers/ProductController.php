@@ -40,8 +40,15 @@ class ProductController extends Controller
             'wholesale_price'=> 'required|numeric|min:1|max:999999|lte:retail_price',
             'min_wholesale_qty'=> 'required|integer|min:10',
             'quantity'=> 'required|integer|min:0',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        Product::create($request->all());
+        $product = Product::create($request->all());
+        if($request->hasFile('photo')){
+            $file = $request->file('photo');
+            $fileName = $file -> hashName();
+            $filePatch = $file->storeAs('public', $fileName);
+            $product->update(['photo' => $filePatch]);
+        }
         return redirect()->route('products.index');
     }
 
@@ -73,6 +80,7 @@ class ProductController extends Controller
             'wholesale_price'=> 'required|numeric|min:1|max:999999|lte:retail_price',
             'min_wholesale_qty'=> 'required|integer|min:10',
             'quantity'=> 'required|integer|min:0',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $product->update($request->except(['_token', '_method']));
         return redirect()->route('products.index');

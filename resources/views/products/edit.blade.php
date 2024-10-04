@@ -4,7 +4,7 @@
 
 <div class="container">
     <main>
-        <form action="{{ route('products.update', $product->id) }}" method="POST">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
@@ -57,6 +57,15 @@
                     <label class="form-label" for="quantity">Quantity</label>
                     <input class="form-control @error('quantity') is-invalid @enderror" type="number" name="quantity" id="quantity" value="{{ old('quantity', $product->quantity) }}">
                     @error('quantity')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-6 mt-2 mb-2">
+                    <label class="form-label" for="photo">Photo</label>
+                    <input class="form-control @error('photo') is-invalid @enderror" type="file" name="photo" id="photo" value="{{old('photo -> $products')}}">
+                    @error('photo')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
