@@ -8,6 +8,7 @@
         <table class="table table-striped mb-2 mt-2">
             <thead class="table-dark text-center">
                 <th>ID</th>
+                <th>Foto</th>
                 <th>Nama Produk</th>
                 <th>Deskripsi</th>
                 <th>Harga Eceran</th>
@@ -20,8 +21,8 @@
                 @foreach ($products as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
-                    <td>
-                        <img src="{{Storage::url($product->photo) }}" class="img-thumbnail w-50">
+                    <td class="text-center">
+                        <img src="{{Storage::url($product->photo) }}" class="img-thumbnail w-25">
                     </td>
                     <td>
                         <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>

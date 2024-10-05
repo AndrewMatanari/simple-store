@@ -42,7 +42,7 @@ class ProductController extends Controller
             'quantity'=> 'required|integer|min:0',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $product = Product::create($request->all());
+        $product = Product::create($request->only(['name', 'description', 'retail_price', 'wholesale_price', 'min_wholesale_qty', 'quantity']));
         if($request->hasFile('photo')){
             $file = $request->file('photo');
             $fileName = $file -> hashName();
@@ -82,7 +82,13 @@ class ProductController extends Controller
             'quantity'=> 'required|integer|min:0',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $product->update($request->except(['_token', '_method']));
+        $product->update($request->only(['name', 'description', 'retail_price', 'wholesale_price', 'min_wholesale_qty', 'quantity']));
+        if($request->hasFile('photo')){
+            $file = $request->file('photo');
+            $fileName = $file -> hashName();
+            $filePatch = $file->storeAs('public', $fileName);
+            $product->update(['photo' => $filePatch]);
+        }
         return redirect()->route('products.index');
     }
 
@@ -95,3 +101,4 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 }
+

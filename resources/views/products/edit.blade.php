@@ -64,13 +64,15 @@
                 </div>
                 <div class="col-6 mt-2 mb-2">
                     <label class="form-label" for="photo">Photo</label>
-                    <input class="form-control @error('photo') is-invalid @enderror" type="file" name="photo" id="photo" value="{{old('photo -> $products')}}">
+                    <input class="form-control @error('photo') is-invalid @enderror" type="file" name="photo" id="photo" accept="image/*">
+                    <img src="{{ Storage::url($product->photo) }}" alt="" width="100">
                     @error('photo')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
+
                 <div class="col-12 mt-4 mb-4">
                     <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
                     <button class="btn btn-primary">Update</button>
