@@ -9,15 +9,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function index()
     {
-        // $products = Product::all();
-        $products = Product::paginate(10);
+    // $products = Product::all();
+        $products = Product::paginate(15);
         return view("products.index", compact("products"));
     }
 

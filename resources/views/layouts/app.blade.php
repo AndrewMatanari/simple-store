@@ -22,6 +22,9 @@
             <div class="container">
                 <ul class="navbar-nav me-auto navbar-brand">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.main') }}">{{ __('Simple Store') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('products.index') }}">{{ __('Dashboard') }}</a>
                     </li>
                 </ul>
@@ -76,4 +79,3 @@
     </div>
 </body>
 </html>
-

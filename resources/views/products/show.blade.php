@@ -3,11 +3,14 @@
 @section('content')
 <div class="container">
     <main>
-        <h1>{{$product->name}}</h1>
-        <p>
+        <h1 class="display-4 text-center">{{$product->name}}</h1>
+        <p class="lead text-center">
             {{$product->description}}
         </p>
-        <table class="table table-striped">
+        <div class="d-flex justify-content-center">
+            <img src="{{Storage::url($product->photo) }}" class="img-fluid rounded shadow" style="height: 200px; object-fit: cover;" alt="{{$product->name}}" onerror="this.onerror=null;this.src='https://placehold.co/200';">
+        </div>
+        <table class="table table-striped mt-4">
             <tbody>
                 <tr>
                     <td><b>Retail Price</b></td>
@@ -27,8 +30,14 @@
                 </tr>
             </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+            <div class="mt-4">
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Kembali</a>
+            </div>
+        </div>
     </main>
 </div>
 
 
 @endsection
+
